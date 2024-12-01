@@ -6,6 +6,7 @@ import { PropsWithChildren, Suspense } from 'react';
 import { getURL } from '@/utils/helpers';
 import 'styles/main.css';
 import { Sidebar } from "@/components/layout/sidebar";
+import { createClient } from '@/utils/supabase/server';
 
 const title = 'Next.js Subscription Starter';
 const description = 'Brought to you by Vercel, Stripe, and Supabase.';
@@ -21,16 +22,19 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: PropsWithChildren) {
+  const supabase = createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
   return (
     <html lang="en">
-      <body className="bg-black">
-        <Navbar />
+      <body>
+        {!user && <Navbar />}
         <main
           id="skip"
           className="min-h-[calc(100dvh-4rem)] md:min-h[calc(100dvh-5rem)]"
         >
           <div className="h-full relative">
-            <div className="hidden h-full md:flex md:w-72 md:flex-col md:fixed md:inset-y-0 z-80 bg-gray-900">
+            <div className="hidden h-full md:flex md:w-72 md:flex-col md:fixed md:inset-y-0 z-80">
               <Sidebar />
             </div>
             <main className="md:pl-72">
@@ -38,7 +42,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
             </main>
           </div>
         </main>
-        <Footer />
+        {/* <Footer /> */}
         <Suspense>
           <Toaster />
         </Suspense>

@@ -1,4 +1,4 @@
-.root {
+/* .root {
   @apply sticky top-0 bg-black z-40 transition-all duration-150 h-16 md:h-20;
 }
 
@@ -16,4 +16,4 @@
 
 .logo {
   @apply cursor-pointer rounded-full transform duration-100 ease-in-out;
-}
+} */

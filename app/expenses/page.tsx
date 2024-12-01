@@ -1,5 +1,8 @@
 import { createClient } from '@/utils/supabase/server';
-import { Input } from "@/components/ui/input_new";
+import { getSupplierInvoices } from '@/utils/supabase/queries';
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -8,29 +11,24 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Search } from "lucide-react";
-import { getSupplierInvoices } from '@/utils/supabase/queries';
 
 export default async function ExpensesPage() {
   const supabase = createClient();
   const expenses = await getSupplierInvoices(supabase);
-  console.log(expenses)
 
   return (
-    <div className="h-full p-8">
+    <div className="p-8">
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-4xl font-bold text-gray-900">
-          Expenses
-        </h2>
+        <h2 className="text-2xl">Expenses</h2>
+        <Button>
+          <Plus className="mr-2 h-4 w-4" /> Create Expense
+        </Button>
       </div>
       
-      <div className="relative mb-6">
-        <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-        <Input
-          placeholder="Search expenses..."
-          className="pl-8 bg-white"
-        />
-      </div>
+      <Input 
+        placeholder="Search expenses..." 
+        className="w-64 mb-6"
+      />
 
       <div className="rounded-md border">
         <Table>
