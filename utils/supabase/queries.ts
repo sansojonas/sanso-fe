@@ -37,3 +37,16 @@ export const getUserDetails = cache(async (supabase: SupabaseClient) => {
     .single();
   return userDetails;
 });
+
+export async function getSupplierInvoices(supabase: SupabaseClient) {
+  const { data, error } = await supabase
+    .from('SupplierInvoices')
+    .select('*');
+  
+  if (error) {
+    console.error('Error fetching expenses:', error);
+    return [];
+  }
+  
+  return data;
+}

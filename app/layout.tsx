@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/Toasts/toaster';
 import { PropsWithChildren, Suspense } from 'react';
 import { getURL } from '@/utils/helpers';
 import 'styles/main.css';
+import { Sidebar } from "@/components/layout/sidebar";
 
 const title = 'Next.js Subscription Starter';
 const description = 'Brought to you by Vercel, Stripe, and Supabase.';
@@ -28,7 +29,14 @@ export default async function RootLayout({ children }: PropsWithChildren) {
           id="skip"
           className="min-h-[calc(100dvh-4rem)] md:min-h[calc(100dvh-5rem)]"
         >
-          {children}
+          <div className="h-full relative">
+            <div className="hidden h-full md:flex md:w-72 md:flex-col md:fixed md:inset-y-0 z-80 bg-gray-900">
+              <Sidebar />
+            </div>
+            <main className="md:pl-72">
+              {children}
+            </main>
+          </div>
         </main>
         <Footer />
         <Suspense>

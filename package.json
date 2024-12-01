@@ -22,6 +22,7 @@
     "supabase:pull": "npx supabase db pull"
   },
   "dependencies": {
+    "@prisma/client": "6.0.0",
     "@radix-ui/react-toast": "^1.1.5",
     "@stripe/stripe-js": "2.4.0",
     "@supabase/ssr": "^0.1.0",
@@ -52,6 +53,7 @@
     "postcss": "^8.4.38",
     "prettier": "^3.3.1",
     "prettier-plugin-tailwindcss": "^0.5.14",
+    "prisma": "^6.0.0",
     "supabase": "^1.172.2",
     "typescript": "^5.4.5"
   }
