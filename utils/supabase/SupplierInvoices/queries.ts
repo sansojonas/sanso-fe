@@ -1,59 +1,10 @@
 import { SupabaseClient } from '@supabase/supabase-js';
-import { cache } from 'react';
+import { SupplierInvoice } from './types';
 
-export const getUser = cache(async (supabase: SupabaseClient) => {
-  const {
-    data: { user }
-  } = await supabase.auth.getUser();
-  return user;
-});
-
-export const getSubscription = cache(async (supabase: SupabaseClient) => {
-  const { data: subscription, error } = await supabase
-    .from('subscriptions')
-    .select('*, prices(*, products(*))')
-    .in('status', ['trialing', 'active'])
-    .maybeSingle();
-
-  return subscription;
-});
-
-export const getProducts = cache(async (supabase: SupabaseClient) => {
-  const { data: products, error } = await supabase
-    .from('products')
-    .select('*, prices(*)')
-    .eq('active', true)
-    .eq('prices.active', true)
-    .order('metadata->index')
-    .order('unit_amount', { referencedTable: 'prices' });
-
-  return products;
-});
-
-export const getUserDetails = cache(async (supabase: SupabaseClient) => {
-  const { data: userDetails } = await supabase
-    .from('users')
-    .select('*')
-    .single();
-  return userDetails;
-});
-
-export interface SupplierInvoice {
-  id: string;
-  created_at: string;
-  supplier_name: string;
-  invoice_number: string;
-  amount: {
-    value_excl_tax: number;
-    // Add other amount fields if needed
-  };
-  // Add other fields as per your schema
-}
-
-// Read - Get all supplier invoices (you already have this)
+// Read - Get all supplier invoices
 export async function getSupplierInvoices(supabase: SupabaseClient) {
   const { data, error } = await supabase
-    .from('supplier_invoices')
+    .from('SupplierInvoices')
     .select('*')
     .order('created_at', { ascending: false });
 
@@ -70,7 +21,7 @@ export async function createSupplierInvoice(
   invoice: Omit<SupplierInvoice, 'id' | 'created_at'>
 ) {
   const { data, error } = await supabase
-    .from('supplier_invoices')
+    .from('SupplierInvoices')
     .insert([invoice])
     .select()
     .single();
@@ -89,7 +40,7 @@ export async function updateSupplierInvoice(
   updates: Partial<SupplierInvoice>
 ) {
   const { data, error } = await supabase
-    .from('supplier_invoices')
+    .from('SupplierInvoices')
     .update(updates)
     .eq('id', id)
     .select()
@@ -108,7 +59,7 @@ export async function deleteSupplierInvoice(
   id: string
 ) {
   const { error } = await supabase
-    .from('supplier_invoices')
+    .from('SupplierInvoices')
     .delete()
     .eq('id', id);
 
@@ -125,7 +76,7 @@ export async function searchSupplierInvoices(
   searchTerm: string
 ) {
   const { data, error } = await supabase
-    .from('supplier_invoices')
+    .from('SupplierInvoices')
     .select('*')
     .or(`supplier_name.ilike.%${searchTerm}%,invoice_number.ilike.%${searchTerm}%`)
     .order('created_at', { ascending: false });
@@ -135,4 +86,4 @@ export async function searchSupplierInvoices(
   }
 
   return data;
-}
+} 

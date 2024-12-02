@@ -7,6 +7,7 @@ import {
   Receipt,
   CreditCard,
   Settings,
+  FolderKanban,
 } from "lucide-react";
 
 const routes = [
@@ -14,6 +15,11 @@ const routes = [
     label: "Dashboard",
     icon: LayoutDashboard,
     href: "/",
+  },
+  {
+    label: "Projects",
+    icon: FolderKanban,
+    href: "/projects",
   },
   {
     label: "Expenses",

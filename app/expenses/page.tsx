@@ -1,8 +1,7 @@
 import { createClient } from '@/utils/supabase/server';
-import { getSupplierInvoices } from '@/utils/supabase/queries';
+import { getSupplierInvoices } from '@/utils/supabase/SupplierInvoices/queries';
+import { CreateSupplierInvoiceForm } from './SupplierInvoices/CreateSupplierInvoiceForm';
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -20,9 +19,7 @@ export default async function ExpensesPage() {
     <div className="p-8">
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-2xl">Expenses</h2>
-        <Button>
-          <Plus className="mr-2 h-4 w-4" /> Create Expense
-        </Button>
+        <CreateSupplierInvoiceForm />
       </div>
       
       <Input 
